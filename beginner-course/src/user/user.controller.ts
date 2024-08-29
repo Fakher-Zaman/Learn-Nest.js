@@ -1,6 +1,7 @@
 import { Controller, Delete, Get, Param, Patch, Post, Req } from "@nestjs/common";
 import { Request } from "express";
 
+// Generated through nest-cli
 @Controller('/user')
 export class UserController {
     // '/user/'
