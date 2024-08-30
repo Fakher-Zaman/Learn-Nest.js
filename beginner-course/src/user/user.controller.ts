@@ -1,6 +1,8 @@
 import { UserService } from './user.service';
-import { Controller, Delete, Get, Param, Patch, Post, Req } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from "@nestjs/common";
 import { Request } from "express";
+import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 // Generated through nest-cli
 @Controller('/user')
@@ -23,14 +25,17 @@ export class UserController {
 
     // '/user/'
     @Post()
-    store(@Req() req: Request) {
-        return this.userService.create(req);
+    store(@Body() createUserDto: CreateUserDto) {
+        return this.userService.create(createUserDto);
     }
 
     // '/user/:userId/'
     @Patch('/:userId')
-    updateUser(@Req() req: Request, @Param() param: { userId: number }) {
-        return this.userService.update(req, param);
+    updateUser(
+        @Body() updateUserDto: UpdateUserDto, 
+        @Param() param: { userId: number }
+    ) {
+        return this.userService.update(updateUserDto, param);
     }
 
     // '/user/:userId/'
