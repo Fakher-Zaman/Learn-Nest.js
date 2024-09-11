@@ -4,10 +4,16 @@ import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
 import { logger, LoggerMiddleware } from './middlewares/logger.middleware';
 import { CatsController } from './cats/cats.controller';
+import { AllExceptionsFilter } from './all-exceptions.filter';
 
 @Module({
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, 
+    {
+      provide: 'APP_CONFIG',
+      useClass: AllExceptionsFilter
+    }
+  ],
   imports: [CatsModule],
 })
 export class AppModule implements NestModule {

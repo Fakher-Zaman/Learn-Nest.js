@@ -1,10 +1,13 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { logger } from './middlewares/logger.middleware';
+import { HttpAdapterHost, NestFactory } from "@nestjs/core";
+import { AllExceptionsFilter } from "./all-exceptions.filter";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // app.use(logger);
+
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+
   await app.listen(3000);
 }
 bootstrap();

@@ -1,19 +1,19 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, ForbiddenException, Get, HttpException, HttpStatus, Post, UseFilters } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
-import { Cat } from './interfaces/cat.interface';
-
+// @UseFilters(new HttpExceptionFilter())
 @Controller('cats')
 export class CatsController {
-    constructor(private catsService: CatsService) {}
+    constructor(private catsService: CatsService) { }
 
     @Post()
+    // @UseFilters(new HttpExceptionFilter())
     async create(@Body() createCatDto: CreateCatDto) {
-        this.catsService.create(createCatDto);
+        throw new ForbiddenException();
     }
 
     @Get()
-    async findAll(): Promise<Cat[]> {
-        return this.catsService.findAll();
+    async findAll() {
+        throw new BadRequestException('Something bad happened', {cause: new Error(), description: 'Some error description'});
     }
 }
