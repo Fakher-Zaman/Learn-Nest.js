@@ -8,6 +8,14 @@ GET http://localhost:3000/songs/1
 
 ### Create New Song Request
 POST http://localhost:3000/songs
+Content-Type: application/json
+
+{
+    "title": "Allay",
+    "artists": ["Ali Zafar", "Arooj"],
+    "releasedDate": "2022-09-29",
+    "duration": "02:34"
+}
 
 ### Update Song Request
 PUT http://localhost:3000/songs/1
