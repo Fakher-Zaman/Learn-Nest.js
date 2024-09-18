@@ -7,6 +7,7 @@ import { SongsController } from './songs/songs.controller';
 import { DevConfigService } from './common/providers/DevConfigService';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { Song } from './songs/songs.entity';
 
 const devConfig = { port: 3000 }
 const proConfig = { port: 4000 }
@@ -21,7 +22,7 @@ const proConfig = { port: 4000 }
       username: 'postgres',
       password: 'Passw0rd',
       type: 'postgres',
-      entities: [],
+      entities: [Song],
       synchronize: true,
     })
   ],
