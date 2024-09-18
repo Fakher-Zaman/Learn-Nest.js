@@ -3,7 +3,10 @@ import { CreateSongsDTO } from './dto/create-songs-dto';
 import { SongsService } from './songs.service';
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put, Scope } from '@nestjs/common';
 
-@Controller('songs')
+@Controller({
+    path: 'songs',
+    scope: Scope.REQUEST,
+})
 export class SongsController {
     constructor(
         private songsService: SongsService,
