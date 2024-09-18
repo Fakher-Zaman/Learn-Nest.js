@@ -1,10 +1,17 @@
+import { Connection, connection } from './../common/constants/connection';
 import { CreateSongsDTO } from './dto/create-songs-dto';
 import { SongsService } from './songs.service';
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put, Scope } from '@nestjs/common';
 
 @Controller('songs')
 export class SongsController {
-    constructor(private songsService: SongsService) { }
+    constructor(
+        private songsService: SongsService,
+        @Inject('CONNECTION')
+        private connection: Connection
+    ) {
+        console.log(`THIS IS CONNECTION STRING: ${this.connection.CONNECTION_STRING}`);
+    }
     @Post()
     create(@Body() createSongsDto: CreateSongsDTO) {
         return this.songsService.create(createSongsDto);

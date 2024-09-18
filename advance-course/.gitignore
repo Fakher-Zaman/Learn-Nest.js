@@ -3,6 +3,9 @@
 /node_modules
 /build
 
+# Course Ebook
+/Nestjs-Ebook.pdf
+
 # Logs
 logs
 *.log
