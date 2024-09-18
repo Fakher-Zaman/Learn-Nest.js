@@ -10,7 +10,7 @@ import { DataSource } from 'typeorm';
 import { Song } from './songs/songs.entity';
 
 const devConfig = { port: 3000 }
-const proConfig = { port: 4000 }
+// const proConfig = { port: 4000 }
 
 @Module({
   imports: [
@@ -36,7 +36,7 @@ const proConfig = { port: 4000 }
     {
       provide: 'CONFIG',
       useFactory: () => {
-        return process.env.NODE_ENV === 'development' ? devConfig : proConfig
+        return process.env.NODE_ENV === 'development' || devConfig
       },
     },
   ],

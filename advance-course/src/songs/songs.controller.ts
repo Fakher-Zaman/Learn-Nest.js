@@ -1,7 +1,10 @@
+import { Song } from './songs.entity';
 import { Connection, connection } from './../common/constants/connection';
 import { CreateSongsDTO } from './dto/create-songs-dto';
 import { SongsService } from './songs.service';
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put, Scope } from '@nestjs/common';
+import { DeleteResult } from 'typeorm';
+import { UpdateSongsDTO } from './dto/update-songs-dto';
 
 @Controller({
     path: 'songs',
@@ -16,12 +19,12 @@ export class SongsController {
         console.log(`THIS IS CONNECTION STRING: ${this.connection.CONNECTION_STRING}`);
     }
     @Post()
-    create(@Body() createSongsDto: CreateSongsDTO) {
+    create(@Body() createSongsDto: CreateSongsDTO): Promise<Song> {
         return this.songsService.create(createSongsDto);
     }
 
     @Get()
-    findAll() {
+    findAll(): Promise<Song[]> {
         try {
             return this.songsService.findAll();
         } catch (error) {
@@ -44,18 +47,21 @@ export class SongsController {
                 errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE,
             })
         )
-        id: Number,
-    ) {
-        return `fetch song on the based of id ${typeof id}`;
+        id: number,
+    ): Promise<Song> {
+        return this.songsService.findOne(id);
     }
 
     @Put(':id')
-    update() {
-        return 'update song on the based of id';
+    update(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() updateSongsDto: UpdateSongsDTO,
+    ) {
+        return this.songsService.update(id, updateSongsDto);
     }
 
     @Delete(':id')
-    delete() {
-        return 'delete song on the based of id';
+    delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
+        return this.songsService.remove(id);
     }
 }
