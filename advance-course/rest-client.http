@@ -29,3 +29,13 @@ Content-Type: application/json
 
 ### Delete Song on the based of id
 DELETE http://localhost:3000/songs/6
+
+### Create Playlist
+POST http://localhost:3000/playlists
+Content-Type: application/json
+
+{
+    "name": "Feel Good Now",
+    "songs": [4],
+    "user": 2
+}
